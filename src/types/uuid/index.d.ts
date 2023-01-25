@@ -1,4 +1,5 @@
-declare module "uuid" {
-  export { v4 as default } from " @types/uuid";
-  export { uuid as default } from "@types/uuid";
+import type { v4 } from "uuid";
+
+declare global {
+  export type uuid = v4
 }

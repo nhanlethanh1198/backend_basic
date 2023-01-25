@@ -1,63 +1,109 @@
-// type UserAssociations = "posts" | "comments" | "roles";
+import { sequelize } from "@/config/sql.config";
+import { DataTypes, Model } from "@sequelize/core";
+// import * as uuid from "uuid";
+import type { v4 as uuid } from "uuid";
 
-// export class User extends Model {
-//
-//   // declare public id: string | any;
-//   declare public username: string;
-//   declare public name: string;
-//   declare public email: string;
-//   declare public password: string;
-//   declare public phone: string;
-//   declare public address: string;
-//   declare public is_admin: boolean;
-//
-//   declare public readonly created_at: Date;
-//   declare public updated_at: Date;
-//   declare public deleted_at: Date;
-//
-//   // declare public getPosts: HasManyGetAssociationsMixin<Post>;
-//   // declare public setPosts: HasManySetAssociationsMixin<Post, Post['id']>;
-//   // declare public addPost: HasManyAddAssociationMixin<Post, Post['id']>;
-//   // declare public addPosts: HasManyAddAssociationsMixin<Post, Post['id']>;
-//   // declare public createPost: HasManyCreateAssociationMixin<Post>;
-//   // declare public removePost: HasManyRemoveAssociationMixin<Post, Post['id']>;
-//   // declare public removePosts: HasManyRemoveAssociationsMixin<Post, Post['id']>;
-//   // declare public hasPost: HasManyHasAssociationMixin<Post, Post['id']>;
-//   // declare public hasPosts: HasManyHasAssociationsMixin<Post, Post['id']>;
-//   // declare public countPosts: HasManyCountAssociationsMixin;
-//
-//
-//   // declare public getComments: HasManyGetAssociationsMixin<Comment>;
-//   // declare public setComments: HasManySetAssociationsMixin<Comment, Comment['id']>;
-//   // declare public addComment: HasManyAddAssociationMixin<Comment, Comment['id']>;
-//   // declare public addComments: HasManyAddAssociationsMixin<Comment, Comment['id']>;
-//   // declare public createComment: HasManyCreateAssociationMixin<Comment>;
-//   // declare public removeComment: HasManyRemoveAssociationMixin<Comment, Comment['id']>;
-//   // declare public removeComments: HasManyRemoveAssociationsMixin<Comment, Comment['id']>;
-//   // declare public hasComment: HasManyHasAssociationMixin<Comment, Comment['id']>;
-//   // declare public hasComments: HasManyHasAssociationsMixin<Comment, Comment['id']>;
-//   // declare public countComments: HasManyCountAssociationsMixin;
-//
-//
-//   // declare public getRoles: BelongsToManyGetAssociationsMixin<Role>;
-//   // declare public setRoles: BelongsToManySetAssociationsMixin<Role, Role['id']>;
-//   // declare public addRole: BelongsToManyAddAssociationMixin<Role, Role['id']>;
-//   // declare public addRoles: BelongsToManyAddAssociationsMixin<Role, Role['id']>;
-//   // declare public createRole: BelongsToManyCreateAssociationMixin<Role>;
-//   // declare public removeRole: BelongsToManyRemoveAssociationMixin<Role, Role['id']>;
-//   // declare public removeRoles: BelongsToManyRemoveAssociationsMixin<Role, Role['id']>;
-//   // declare public hasRole: BelongsToManyHasAssociationMixin<Role, Role['id']>;
-//   // declare public hasRoles: BelongsToManyHasAssociationsMixin<Role, Role['id']>;
-//   // declare public countRoles: BelongsToManyCountAssociationsMixin;
-//
-//   // static initModel(sequelize: Sequelize) {
-//   //   User.init({
-//   //     id: {
-//   //       type: DataTypes.UUID,
-//   //       defaultValue: DataTypes.UUIDV4,
-//   //       primaryKey: true
-//   //     }
-//   //   }, { sequelize });
-//   // }
-//
-// }
+
+class User extends Model {
+  declare public id: uuid;
+  declare public username: string;
+  declare public firstName: string;
+  declare public lastName: string;
+  declare public email: string;
+  declare public password: string;
+  declare public phone: string;
+  declare public address: string;
+  declare public isAdmin: boolean;
+
+  declare public createdAt: Date;
+  declare public updatedAt: Date;
+
+  declare public deletedAt: Date;
+
+}
+
+User.init({
+  id: {
+    type: DataTypes.UUIDV4,
+    primaryKey: true,
+    defaultValue: DataTypes.UUIDV4
+  },
+  username: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true
+  },
+  firstName: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  lastName: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    validate: {
+      isEmail: true
+    }
+  },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  phone: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  address: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  isAdmin: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
+  },
+  createdAt: {
+    type: DataTypes.DATE,
+    allowNull: false,
+    defaultValue: DataTypes.NOW
+  },
+  updatedAt: {
+    type: DataTypes.DATE,
+    allowNull: false,
+    defaultValue: DataTypes.NOW
+  },
+  deletedAt: {
+    type: DataTypes.DATE,
+    allowNull: true
+  }
+
+}, {
+  sequelize,
+  modelName: "User",
+  tableName: "tbl_users",
+  timestamps: true,
+  paranoid: true,
+  hooks: {
+    beforeUpdate: (user: User) => {
+      user.updatedAt = new Date();
+    }
+  },
+  defaultScope: {
+    attributes: { exclude: ["password"] }
+  },
+  scopes: {
+    withPassword: {
+      attributes: { exclude: [] }
+    },
+    withDeleted: {
+      paranoid: false
+    },
+    onlyDeleted: {
+      paranoid: false,
+      where: { deletedAt: { $ne: null } }
+    }
+  }
+});
