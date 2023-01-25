@@ -6,7 +6,7 @@ const mongoConnectDB = async (URL: string): Promise<void> => {
         const connection: any = await connect(URL, {});
         logger.info(`Mongo DB is connected to: ${connection.connection.host}`);
     } catch (err: Error | any) {
-        logger.error(`An error ocurred\n\r\n\r${err}`);
+        logger.error(`An error occurred\n\r\n\r${err}`);
     }
 };
 
