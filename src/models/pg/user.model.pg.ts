@@ -1,11 +1,11 @@
-import { DataTypes, Model, Sequelize } from "@sequelize/core";
+import { Model } from "@sequelize/core";
 
 
 // type UserAssociations = "posts" | "comments" | "roles";
 
 export class User extends Model {
 
-  declare public id: string | any;
+  // declare public id: string | any;
   declare public username: string;
   declare public name: string;
   declare public email: string;
@@ -53,14 +53,14 @@ export class User extends Model {
   // declare public hasRoles: BelongsToManyHasAssociationsMixin<Role, Role['id']>;
   // declare public countRoles: BelongsToManyCountAssociationsMixin;
 
-  static initModel(sequelize: Sequelize) {
-    User.init({
-      id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
-        primaryKey: true
-      }
-    }, { sequelize });
-  }
+  // static initModel(sequelize: Sequelize) {
+  //   User.init({
+  //     id: {
+  //       type: DataTypes.UUID,
+  //       defaultValue: DataTypes.UUIDV4,
+  //       primaryKey: true
+  //     }
+  //   }, { sequelize });
+  // }
 
 }
