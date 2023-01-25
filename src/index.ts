@@ -1,42 +1,53 @@
-import express, { Application, Request, Response, NextFunction } from 'express'
+import express, { Application, NextFunction, Request, Response } from "express";
 
-import compression from 'compression'
-import cookieParser from 'cookie-parser'
-import cors from 'cors'
-import helmet from 'helmet'
+import compression from "compression";
+import cookieParser from "cookie-parser";
+import cors from "cors";
+import helmet from "helmet";
 
-import ErrorMiddleware from '@/middlewares/error.middleware'
-import HttpException from '@/utils/exceptions/http.exceptions'
-import Controller from '@/interfaces/controller.interface'
+import ErrorMiddleware from "@/middlewares/error.middleware";
+import HttpException from "@/utils/exceptions/http.exceptions";
+import Controller from "@/interfaces/controller.interface";
 
-import connectDb from '@/config/db.config'
+import mongoConnectDB from "@/config/db.config";
+import { postgresTestConnectDB } from "@/config/sql.config";
 
 // variable
-import Variable from '@/env/variable.env'
+import Variable from "@/env/variable.env";
 
 // api constant
-import ConstantAPI from '@/constants/api.constant'
+import ConstantAPI from "@/constants/api.constant";
 
 // message constant
-import ConstantMessage from '@/constants/message.constant'
+import ConstantMessage from "@/constants/message.constant";
 
 // http constant
-import ConstantHttpCode from '@/constants/http.code.constant'
-import ConstantHttpReason from '@/constants/http.reason.constant'
+import ConstantHttpCode from "@/constants/http.code.constant";
+import ConstantHttpReason from "@/constants/http.reason.constant";
 
 class App {
-    public app: Application
-    private DATABASE_URL: string
+    public app: Application;
+    private MONGO_DATABASE_URL: string;
+    private POSTGRES_DATABASE_URL: string;
+    private POSTGRES_DATABASE_NAME: string;
+    private POSTGRES_DATABASE_USERNAME: string;
+    private POSTGRES_DATABASE_PASSWORD: string;
+
 
     constructor(controllers: Controller[]) {
-        this.app = express()
-        this.DATABASE_URL = Variable.DATABASE_URL
+        this.app = express();
+        this.MONGO_DATABASE_URL = Variable.MONGO_DATABASE_URL;
+        this.POSTGRES_DATABASE_URL = Variable.POSTGRES_DATABASE_URL;
+        this.POSTGRES_DATABASE_NAME = Variable.POSTGRES_DATABASE_NAME;
+        this.POSTGRES_DATABASE_USERNAME = Variable.POSTGRES_DATABASE_USERNAME;
+        this.POSTGRES_DATABASE_PASSWORD = Variable.POSTGRES_DATABASE_PASSWORD;
 
-        this.initialiseDatabaseConnection(this.DATABASE_URL)
-        this.initialiseConfig()
-        this.initialiseRoutes()
-        this.initialiseControllers(controllers)
-        this.initialiseErrorHandling()
+        this.initialiseDatabaseConnection(this.MONGO_DATABASE_URL);
+        this.initialisePostgresConnection();
+        this.initialiseConfig();
+        this.initialiseRoutes();
+        this.initialiseControllers(controllers);
+        this.initialiseErrorHandling();
     }
 
     private initialiseConfig(): void {
@@ -75,16 +86,20 @@ class App {
 
     private initialiseControllers(controllers: Controller[]): void {
         controllers.forEach((controller: Controller) => {
-            this.app.use(ConstantAPI.API, controller.router)
-        })
+            this.app.use(ConstantAPI.API, controller.router);
+        });
     }
 
     private initialiseErrorHandling(): void {
-        this.app.use(ErrorMiddleware)
+        this.app.use(ErrorMiddleware);
     }
 
-    private initialiseDatabaseConnection(url: string): void {
-        connectDb(url)
+    private async initialiseDatabaseConnection(url: string): Promise<void> {
+        await mongoConnectDB(url);
+    }
+
+    private async initialisePostgresConnection(): Promise<void> {
+        await postgresTestConnectDB();
     }
 }
 

@@ -1,26 +1,25 @@
-
-import User from '@/models/user.model'
-import UserInterface from '@/interfaces/user.interface'
+import User from "@/models/mongo/user.model";
+import UserInterface from "@/interfaces/user.interface";
 
 class UserRepository {
-    public async findAll(): Promise<UserInterface[]> {
-        const users = await User.find({}).select('-password')
-        return users
-    }
+  public async findAll(): Promise<UserInterface[]> {
+    const users = await User.find({}).select("-password");
+    return users;
+  }
 
-    public async findById(id: string): Promise<UserInterface | null> {
-        const user = await User.findById(id).select('-password')
-        return user
-    }
+  public async findById(id: string): Promise<UserInterface | null> {
+    const user = await User.findById(id).select("-password");
+    return user;
+  }
 
-    public async findByUsername(username: string): Promise<UserInterface | null> {
-        const user = await User.findOne({ username }).select('-password')
-        return user
-    }
+  public async findByUsername(username: string): Promise<UserInterface | null> {
+    const user = await User.findOne({ username }).select("-password");
+    return user;
+  }
 
-    public async findByEmail(email: string): Promise<UserInterface | null> {
-        const user = await User.findOne({ email }).select('-password')
-        return user
+  public async findByEmail(email: string): Promise<UserInterface | null> {
+    const user = await User.findOne({ email }).select("-password");
+    return user;
     }
 
     public async findByPhone(phone: string): Promise<UserInterface | null> {
