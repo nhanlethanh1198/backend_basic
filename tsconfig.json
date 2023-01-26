@@ -7,6 +7,8 @@
     "baseUrl": "./src",
     "declaration": true,
     "emitDeclarationOnly": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "outDir": "./build",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
@@ -60,7 +62,7 @@
       ],
       "@/validations/*": [
         "validations/*"
-      ],
+      ]
     },
     "typeRoots": [
       "./src/types",

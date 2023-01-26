@@ -1,7 +1,7 @@
-import { sequelize } from "@/config/sql.config";
-import { DataTypes, Model } from "@sequelize/core";
-import type { v4 as uuid } from "uuid";
-import ConstantNumber from "@/constants/number.constant";
+import { sequelize } from '@/config/sql.config'
+import { DataTypes, Model } from 'sequelize'
+import type { v4 as uuid } from 'uuid'
+import ConstantNumber from '@/constants/number.constant'
 
 class User extends Model {
   declare public id: uuid;

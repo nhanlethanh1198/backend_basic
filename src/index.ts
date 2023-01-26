@@ -1,29 +1,29 @@
-import express, { Application, NextFunction, Request, Response } from "express";
+import express, { Application, NextFunction, Request, Response } from 'express'
 
-import compression from "compression";
-import cookieParser from "cookie-parser";
-import cors from "cors";
-import helmet from "helmet";
+import compression from 'compression'
+import cookieParser from 'cookie-parser'
+import cors from 'cors'
+import helmet from 'helmet'
 
-import ErrorMiddleware from "@/middlewares/error.middleware";
-import HttpException from "@/utils/exceptions/http.exceptions";
-import Controller from "@/interfaces/controller.interface";
+import ErrorMiddleware from '@/middlewares/error.middleware'
+import HttpException from '@/utils/exceptions/http.exceptions'
+import Controller from '@/interfaces/controller.interface'
 
-import mongoConnectDB from "@/config/db.config";
-import { postgresTestConnectDB } from "@/config/sql.config";
+import mongoConnectDB from '@/config/db.config'
+import { postgresTestConnectDB, syncSequelize } from '@/config/sql.config'
 
 // variable
-import Variable from "@/env/variable.env";
+import Variable from '@/env/variable.env'
 
 // api constant
-import ConstantAPI from "@/constants/api.constant";
+import ConstantAPI from '@/constants/api.constant'
 
 // message constant
-import ConstantMessage from "@/constants/message.constant";
+import ConstantMessage from '@/constants/message.constant'
 
 // http constant
-import ConstantHttpCode from "@/constants/http.code.constant";
-import ConstantHttpReason from "@/constants/http.reason.constant";
+import ConstantHttpCode from '@/constants/http.code.constant'
+import ConstantHttpReason from '@/constants/http.reason.constant'
 
 class App {
     public app: Application;
@@ -99,7 +99,9 @@ class App {
     }
 
     private async initialisePostgresConnection(): Promise<void> {
-        await postgresTestConnectDB();
+        await postgresTestConnectDB().then(async () => {
+            await syncSequelize()
+        })
     }
 }
 

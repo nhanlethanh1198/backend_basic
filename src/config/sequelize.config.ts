@@ -1,28 +1,32 @@
-import VariableEnv from '@/env/variable.env'
+// import Variable from '@/env/variable.env'
+import * as process from 'process'
+
+require('dotenv').config()
+const Variable = process.env
 
 module.exports = {
   development: {
-    username: VariableEnv.POSTGRES_DATABASE_USERNAME,
-    password: VariableEnv.POSTGRES_DATABASE_PASSWORD,
-    database: VariableEnv.POSTGRES_DATABASE_NAME,
-    host: VariableEnv.POSTGRES_DATABASE_URL,
+    username: Variable.POSTGRES_DATABASE_USERNAME,
+    password: Variable.POSTGRES_DATABASE_PASSWORD,
+    database: Variable.POSTGRES_DATABASE_NAME,
+    host: Variable.POSTGRES_DATABASE_URL,
     dialect: 'postgres',
-    logging: false
+    logging: false,
   },
   test: {
-    username: VariableEnv.POSTGRES_DATABASE_USERNAME,
-    password: VariableEnv.POSTGRES_DATABASE_PASSWORD,
-    database: VariableEnv.POSTGRES_DATABASE_NAME,
-    host: VariableEnv.POSTGRES_DATABASE_URL,
+    username: Variable.POSTGRES_DATABASE_USERNAME,
+    password: Variable.POSTGRES_DATABASE_PASSWORD,
+    database: Variable.POSTGRES_DATABASE_NAME,
+    host: Variable.POSTGRES_DATABASE_URL,
     dialect: 'postgres',
-    logging: false
+    logging: false,
   },
   production: {
-    username: VariableEnv.POSTGRES_DATABASE_USERNAME,
-    password: VariableEnv.POSTGRES_DATABASE_PASSWORD,
-    database: VariableEnv.POSTGRES_DATABASE_NAME,
-    host: VariableEnv.POSTGRES_DATABASE_URL,
+    username: Variable.POSTGRES_DATABASE_USERNAME,
+    password: Variable.POSTGRES_DATABASE_PASSWORD,
+    database: Variable.POSTGRES_DATABASE_NAME,
+    host: Variable.POSTGRES_DATABASE_URL,
     dialect: 'postgres',
-    logging: false
+    logging: false,
   }
 }
