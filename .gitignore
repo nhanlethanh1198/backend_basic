@@ -38,6 +38,7 @@ bower_components
 # Compiled binary addons (https://nodejs.org/api/addons.html)
 build
 build/Release
+build/*
 
 # Dependency directories
 node_modules/
@@ -117,3 +118,7 @@ web_modules/
 .pnp.*
 
 src/**/*.{js,jsx}
+
+# Idea
+.idea
+.idea/*
