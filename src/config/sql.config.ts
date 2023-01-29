@@ -1,6 +1,7 @@
 import { InstanceUpdateOptions, Sequelize, UpdateOptions } from 'sequelize'
 import VariableEnv from '@/env/variable.env'
 import logger from '@/utils/logger.util'
+const sequelizeTransforms = require('sequelize-transforms')
 
 const {
   POSTGRES_DATABASE_URL,
@@ -29,6 +30,11 @@ export const sequelize = new Sequelize(POSTGRES_DATABASE_NAME, POSTGRES_DATABASE
     },
   },
 });
+
+// Add sequelize-transforms
+// Docs: https://www.npmjs.com/package/sequelize-transforms
+sequelizeTransforms(sequelize)
+
 
 export const postgresTestConnectDB = async (): Promise<void> => {
   try {

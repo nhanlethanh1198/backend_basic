@@ -25,13 +25,20 @@ import ConstantMessage from '@/constants/message.constant'
 import ConstantHttpCode from '@/constants/http.code.constant'
 import ConstantHttpReason from '@/constants/http.reason.constant'
 
+const session = require('express-session')
+
 class App {
     public app: Application;
-    private MONGO_DATABASE_URL: string;
+    private readonly MONGO_DATABASE_URL: string;
     private POSTGRES_DATABASE_URL: string;
     private POSTGRES_DATABASE_NAME: string;
     private POSTGRES_DATABASE_USERNAME: string;
     private POSTGRES_DATABASE_PASSWORD: string;
+    private SESSION_SECRET: string;
+    private SESSION_NAME: string;
+    private SESSION_KEYS: string;
+    private SESSION_MAX_AGE: number;
+    private SESSION_RESAVE: boolean;
 
 
     constructor(controllers: Controller[]) {
@@ -41,9 +48,15 @@ class App {
         this.POSTGRES_DATABASE_NAME = Variable.POSTGRES_DATABASE_NAME;
         this.POSTGRES_DATABASE_USERNAME = Variable.POSTGRES_DATABASE_USERNAME;
         this.POSTGRES_DATABASE_PASSWORD = Variable.POSTGRES_DATABASE_PASSWORD;
+        this.SESSION_SECRET = Variable.SESSION_SECRET;
+        this.SESSION_NAME = Variable.SESSION_NAME;
+        this.SESSION_KEYS = Variable.SESSION_KEYS;
+        this.SESSION_MAX_AGE = Variable.SESSION_MAX_AGE;
+        this.SESSION_RESAVE = Variable.SESSION_RESAVE;
 
-        this.initialiseDatabaseConnection(this.MONGO_DATABASE_URL);
-        this.initialisePostgresConnection();
+
+        this.initialiseDatabaseConnection(this.MONGO_DATABASE_URL).then();
+        this.initialisePostgresConnection().then();
         this.initialiseConfig();
         this.initialiseRoutes();
         this.initialiseControllers(controllers);
@@ -57,6 +70,26 @@ class App {
         this.app.use(compression())
         this.app.use(cors())
         this.app.use(helmet())
+
+        // Reduce Fingerprinting
+        this.app.disable('x-powered-by')
+
+        // Session Config
+        this.app.use(session({
+            name: this.SESSION_NAME,
+            keys: Array.map(this.SESSION_KEYS.split(','), (key: string) => key.trim()),
+            secret: this.SESSION_SECRET,
+            resave: this.SESSION_RESAVE,
+            saveUninitialized: true,
+            cookie: {
+                secure: true,
+                httpOnly: true,
+                expires: this.SESSION_MAX_AGE,
+            },
+            proxy: true,
+        }))
+
+
     }
 
     private initialiseRoutes(): void {

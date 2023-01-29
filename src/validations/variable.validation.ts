@@ -1,4 +1,4 @@
-import { cleanEnv, port, str } from "envalid";
+import { cleanEnv, port, str, num } from "envalid";
 
 const validate = (): void => {
     cleanEnv(process.env, {
@@ -12,7 +12,11 @@ const validate = (): void => {
         POSTGRES_DATABASE_USERNAME: str(),
         POSTGRES_DATABASE_PASSWORD: str(),
         JWT_SECRET: str(),
-        PASS_SECRET: str()
+        PASS_SECRET: str(),
+        SESSION_SECRET: str(),
+        SESSION_NAME: str(),
+        SESSION_KEYS: str(),
+        SESSION_MAX_AGE: num(),
     })
 }
 
