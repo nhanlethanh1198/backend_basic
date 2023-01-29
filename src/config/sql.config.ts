@@ -21,8 +21,18 @@ export const sequelize = new Sequelize(POSTGRES_DATABASE_NAME, POSTGRES_DATABASE
     paranoid: true,
     freezeTableName: true,
     hooks: {
+      beforeCreate: function(instance: any) {
+        // Slugify
+        if (instance.slug === undefined || instance.slug === null || instance.slug === '') {
+          instance.slug = instance.slug.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '')
+        }
+      },
       beforeUpdate: function(instance: any, options: InstanceUpdateOptions) {
         instance.updatedAt = new Date()
+        // Slugify
+        if (instance.slug === undefined || instance.slug === null || instance.slug === '') {
+          instance.slug = instance.slug.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '')
+        }
       },
       beforeBulkUpdate: function(options: UpdateOptions) {
         options.individualHooks = true

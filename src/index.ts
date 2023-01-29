@@ -77,7 +77,7 @@ class App {
         // Session Config
         this.app.use(session({
             name: this.SESSION_NAME,
-            keys: Array.map(this.SESSION_KEYS.split(','), (key: string) => key.trim()),
+            keys: this.SESSION_KEYS.split(','), // key for encrypting cookie
             secret: this.SESSION_SECRET,
             resave: this.SESSION_RESAVE,
             saveUninitialized: true,
