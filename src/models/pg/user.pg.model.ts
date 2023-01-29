@@ -45,14 +45,14 @@ class User extends Model<
 
   declare posts?: NonAttribute<Post[]>
   declare getPosts: HasManyGetAssociationsMixin<Post>
-  declare setPosts: HasManySetAssociationsMixin<Post, number>
-  declare addPost: HasManyAddAssociationMixin<Post, number>
-  declare addPosts: HasManyAddAssociationsMixin<Post, number>
+  declare setPosts: HasManySetAssociationsMixin<Post, uuid>
+  declare addPost: HasManyAddAssociationMixin<Post, uuid>
+  declare addPosts: HasManyAddAssociationsMixin<Post, uuid>
   declare createPost: HasManyCreateAssociationMixin<Post>
-  declare removePost: HasManyRemoveAssociationMixin<Post, number>
-  declare removePosts: HasManyRemoveAssociationsMixin<Post, number>
-  declare hasPost: HasManyHasAssociationMixin<Post, number>
-  declare hasPosts: HasManyHasAssociationsMixin<Post, number>
+  declare removePost: HasManyRemoveAssociationMixin<Post, uuid>
+  declare removePosts: HasManyRemoveAssociationsMixin<Post, uuid>
+  declare hasPost: HasManyHasAssociationMixin<Post, uuid>
+  declare hasPosts: HasManyHasAssociationsMixin<Post, uuid>
   declare countPosts: HasManyCountAssociationsMixin
 
     static initModel(): typeof User {
