@@ -48,7 +48,7 @@
     "pg-hstore": "2.3.4",
     "reflect-metadata": "0.1.13",
     "regenerator-runtime": "0.13.11",
-    "sequelize": "6.28.0",
+    "sequelize": "6.28.2",
     "sequelize-slugify": "1.6.2",
     "sequelize-transforms": "2.0.0",
     "sequelize-transparent-cache": "2.3.0",
