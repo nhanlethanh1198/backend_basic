@@ -22,7 +22,7 @@ jobs:
       - name: Telegram Notify
         uses: appleboy/telegram-action@0.0.3
         with:
-          to: ${{ secrets.TELEGRAM_GROUP_ID }}
+          to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
             ${{ github.actor }} created commit:
@@ -53,9 +53,6 @@ jobs:
           cache: 'npm'
       - run: yarn install
       - run: yarn build
-#      - run: yarn start
-#      - run: |
-#          curl -X GET "http://localhost:5050"
 
   # This workflow contains a single job called "deploy"
   deploy:
