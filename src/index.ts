@@ -115,6 +115,29 @@ class App {
                 }
             },
         )
+
+        this.app.get(
+          ConstantAPI.ROOT + '/test',
+          (_req: Request, res: Response, next: NextFunction) => {
+              try {
+                  return res.status(ConstantHttpCode.OK).json({
+                      status: {
+                          code: ConstantHttpCode.OK,
+                          msg: ConstantHttpReason.OK,
+                      },
+                      msg: ConstantMessage.API_WORKING,
+                  })
+              } catch (err: any) {
+                  return next(
+                    new HttpException(
+                      ConstantHttpCode.INTERNAL_SERVER_ERROR,
+                      ConstantHttpReason.INTERNAL_SERVER_ERROR,
+                      err.message,
+                    ),
+                  )
+              }
+          },
+        )
     }
 
     private initialiseControllers(controllers: Controller[]): void {
