@@ -25,20 +25,18 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
+        env:
+          SESSION_SECRET: vars.SESSION_SECRET
+          SESSION_NAME: vars.SESSION_NAME
+          SESSION_KEYS: vars.SESSION_KEYS
+          SESSION_MAX_AGE: vars.SESSION_MAX_AGE
+          SESSION_RESAVE: vars.SESSION_RESAVE
+
       - run: yarn install
       - run: yarn build
       - run: yarn start
-
-  test:
-    runs-on: ubuntu-latest
-    if: ${{ always() }}
-    needs: build
-
-    steps:
-      - name: Testing the API
-        run: |
+      - run: |
           curl -X GET "http://localhost:5050"
-
 
   # This workflow contains a single job called "deploy"
   deploy:
