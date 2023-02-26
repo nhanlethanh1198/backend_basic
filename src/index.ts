@@ -196,6 +196,7 @@ class App {
     private async initialisePostgresConnection(): Promise<void> {
         await postgresTestConnectDB().then(async () => {
             await syncSequelize()
+
         })
     }
 }
