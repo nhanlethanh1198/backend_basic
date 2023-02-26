@@ -1,6 +1,6 @@
 // import { GithubHookInterface, Repository, WorkflowJob } from '@/interfaces/github.hook.interface'
 
-export type WorkflowJob = {
+export interface WorkflowJob {
   workflow_name: string
   head_branch: string
   status: string
@@ -12,14 +12,14 @@ export type WorkflowJob = {
 }
 
 
-export type Repository = {
+export interface Repository {
   full_name: string
   private: boolean | string
   html_url: string
 }
 
 
-export type TGithubhook = {
+export interface TGithubhook {
   action: string
   workflow_job: WorkflowJob
   repository: Repository
