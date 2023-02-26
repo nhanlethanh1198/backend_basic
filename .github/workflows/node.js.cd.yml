@@ -56,5 +56,5 @@ jobs:
             cd /var/server/backend_basic
             git pull origin main
             sudo yarn install
-      - run: sudo yarn build
-      - run: pm2 restart 0 --update-env
+            sudo yarn build
+            pm2 restart 0 --update-env
