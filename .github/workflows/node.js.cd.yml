@@ -55,6 +55,6 @@ jobs:
           script: |
             cd /var/server/backend_basic
             git pull origin main
-            yarn install
-            yarn build
+            sudo yarn install
+            sudo yarn build
             pm2 restart 0
