@@ -19,11 +19,11 @@ jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
-      - name: send telegram message on push
-        uses: appleboy/telegram-action@master
+      - name: Telegram Notify
+        uses: appleboy/telegram-action@0.0.3
         with:
-          to: ${{ vars.TELEGRAM_GROUP_ID }}
-          token: ${{ vars.TELEGRAM_TOKEN }}
+          to: ${{ secrets.TELEGRAM_GROUP_ID }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
             ${{ github.actor }} created commit:
             Commit message: ${{ github.event.commits[0].message }}
