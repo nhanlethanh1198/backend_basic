@@ -13,8 +13,13 @@ import logger from '@/utils/logger.util'
 // controllers
 import AuthController from '@/controllers/auth.controller'
 import UserController from '@/controllers/user.controller'
+import GithubController from '@/controllers/github.controller'
 
-const { app } = new App([new AuthController(), new UserController()])
+const { app } = new App([
+    new AuthController(),
+    new UserController(),
+    new GithubController()
+])
 
 /**
  * Normalize a port into a number, string, or false.
@@ -35,7 +40,7 @@ const normalizePort = (val: any) => {
     return false
 }
 
-const port = normalizePort(Variable.PORT || '3030')
+const port = normalizePort(Variable.PORT || '5050')
 app.set('port', port)
 
 /**

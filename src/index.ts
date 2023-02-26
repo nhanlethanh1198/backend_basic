@@ -25,6 +25,9 @@ import ConstantMessage from '@/constants/message.constant'
 // http constant
 import ConstantHttpCode from '@/constants/http.code.constant'
 import ConstantHttpReason from '@/constants/http.reason.constant'
+import { GithubHookInterface } from '@/interfaces/github.hook.interface'
+import { TGithubhook } from './types/githubhook'
+const morgan = require('morgan')
 
 const session = require('express-session')
 
@@ -71,6 +74,7 @@ class App {
         this.app.use(compression())
         this.app.use(cors())
         this.app.use(helmet())
+        this.app.use(morgan())
 
         // Reduce Fingerprinting
         this.app.disable('x-powered-by')
@@ -140,48 +144,49 @@ class App {
           },
         )
 
-        this.app.post(
-          ConstantAPI.ROOT + 'webhook',
-          (_req: Request, res: Response, next: NextFunction) => {
-              try {
-                  const data = _req.body || null
-                  const json_str = JSON.stringify(data) || "none"
-                  const request_body = {
-                      "chat_id": -1001871216290,
-                      "text": json_str
-                  }
-
-                  axios.post('https://api.telegram.org/bot5972720670:AAGekgTvZOlgU1S6FTCGmwA31b28lJdszQs/sendMessage', request_body).then((res: AxiosResponse<any>) => {
-                      return res.data
-                  }).catch((err) => {
-                      console.log(err)
-                  })
-
-
-                  return res.status(ConstantHttpCode.OK).json({
-                      status: {
-                          code: ConstantHttpCode.OK,
-                          msg: ConstantHttpReason.OK,
-                      },
-                      msg: ConstantMessage.API_WORKING,
-                  })
-              } catch (err: any) {
-                  return next(
-                    new HttpException(
-                      ConstantHttpCode.INTERNAL_SERVER_ERROR,
-                      ConstantHttpReason.INTERNAL_SERVER_ERROR,
-                      err.message,
-                    ),
-                  )
-              }
-          },
-        )
+        // this.app.post(
+        //   ConstantAPI.ROOT + 'webhook',
+        //   (_req: Request, res: Response, next: NextFunction) => {
+        //       try {
+        //           const data: TGithubhook = _req.body || undefined
+        //           console.log({data})
+        //           const json_str = JSON.stringify(data) || "none"
+        //           const request_body = {
+        //               "chat_id": -1001871216290,
+        //               "text": json_str
+        //           }
+        //
+        //           axios.post('https://api.telegram.org/bot5972720670:AAGekgTvZOlgU1S6FTCGmwA31b28lJdszQs/sendMessage', request_body).then((res: AxiosResponse<any>) => {
+        //               return res.data
+        //           }).catch((err) => {
+        //               console.log('telegram send webhook error')
+        //           })
+        //
+        //
+        //           return res.status(ConstantHttpCode.OK).json({
+        //               status: {
+        //                   code: ConstantHttpCode.OK,
+        //                   msg: ConstantHttpReason.OK,
+        //               },
+        //               msg: ConstantMessage.API_WORKING,
+        //           })
+        //       } catch (err: any) {
+        //           return next(
+        //             new HttpException(
+        //               ConstantHttpCode.INTERNAL_SERVER_ERROR,
+        //               ConstantHttpReason.INTERNAL_SERVER_ERROR,
+        //               err.message,
+        //             ),
+        //           )
+        //       }
+        //   },
+        // )
 
     }
 
     private initialiseControllers(controllers: Controller[]): void {
         controllers.forEach((controller: Controller) => {
-            this.app.use(ConstantAPI.API, controller.router);
+            this.app.use(controller.router);
         });
     }
 
