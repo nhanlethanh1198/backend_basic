@@ -16,28 +16,8 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  notify:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Telegram Notify
-        uses: appleboy/telegram-action@0.0.3
-        with:
-          to: -1001871216290
-          token: 5972720670:AAGekgTvZOlgU1S6FTCGmwA31b28lJdszQs
-          message: |
-            ${{ github.actor }} created commit:
-            Commit message: ${{ github.event.commits[0].message }}
-            
-            Repository: ${{ github.repository }}
-            
-            See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
-        
-
-
   build:
     runs-on: ubuntu-latest
-    if: ${{ always() }}
-    needs: notify
 
     strategy:
       matrix:
