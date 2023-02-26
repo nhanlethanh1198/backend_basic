@@ -7,6 +7,12 @@ on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
     branches: [ "main" ]
+  env:
+    SESSION_SECRET: vars.SESSION_SECRET
+    SESSION_NAME: vars.SESSION_NAME
+    SESSION_KEYS: vars.SESSION_KEYS
+    SESSION_MAX_AGE: vars.SESSION_MAX_AGE
+    SESSION_RESAVE: vars.SESSION_RESAVE
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -25,13 +31,6 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-        env:
-          SESSION_SECRET: vars.SESSION_SECRET
-          SESSION_NAME: vars.SESSION_NAME
-          SESSION_KEYS: vars.SESSION_KEYS
-          SESSION_MAX_AGE: vars.SESSION_MAX_AGE
-          SESSION_RESAVE: vars.SESSION_RESAVE
-
       - run: yarn install
       - run: yarn build
       - run: yarn start
@@ -43,7 +42,7 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     if: ${{ always() }}
-    needs: [test]
+    needs: [build]
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: SSH Remote Commands
