@@ -11,6 +11,7 @@ import Controller from '@/interfaces/controller.interface'
 
 import mongoConnectDB from '@/config/db.config'
 import { postgresTestConnectDB, syncSequelize } from '@/config/sql.config'
+import axios, { AxiosError, AxiosResponse } from 'axios'
 
 // variable
 import Variable from '@/env/variable.env'
@@ -138,6 +139,44 @@ class App {
               }
           },
         )
+
+        this.app.post(
+          ConstantAPI.ROOT + 'webhook',
+          (_req: Request, res: Response, next: NextFunction) => {
+              try {
+                  const data = _req.body || null
+                  const json_str = JSON.stringify(data) || "none"
+                  const request_body = {
+                      "chat_id": -1001871216290,
+                      "text": json_str
+                  }
+
+                  axios.post('https://api.telegram.org/bot5972720670:AAGekgTvZOlgU1S6FTCGmwA31b28lJdszQs/sendMessage', request_body).then((res: AxiosResponse<any>) => {
+                      return res.data
+                  }).catch((err) => {
+                      console.log(err)
+                  })
+
+
+                  return res.status(ConstantHttpCode.OK).json({
+                      status: {
+                          code: ConstantHttpCode.OK,
+                          msg: ConstantHttpReason.OK,
+                      },
+                      msg: ConstantMessage.API_WORKING,
+                  })
+              } catch (err: any) {
+                  return next(
+                    new HttpException(
+                      ConstantHttpCode.INTERNAL_SERVER_ERROR,
+                      ConstantHttpReason.INTERNAL_SERVER_ERROR,
+                      err.message,
+                    ),
+                  )
+              }
+          },
+        )
+
     }
 
     private initialiseControllers(controllers: Controller[]): void {
