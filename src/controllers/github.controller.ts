@@ -22,16 +22,19 @@ import ConstantHttpReason from '@/constants/http.reason.constant'
 import logger from '@/utils/logger.util'
 import { GithubHookInterface } from '@/interfaces/github.hook.interface'
 import axios, { AxiosError, AxiosResponse } from 'axios'
+const {GithubWebhook} = require('@inventivetalent/express-github-webhook');
 
 class GithubHookController implements Controller {
   public path: string
   public router: Router
-  // private validate: Validate
+  private webhookHandler: typeof GithubWebhook
 
   constructor() {
     this.path = ConstantAPI.HOOK
     this.router = Router()
-    // this.validate = new Validate()
+    this.webhookHandler = new GithubWebhook({
+      events: ['push', 'workflow_run', 'workflow_job',]
+    })
 
     this.initialiseRoutes()
     console.log(this)
@@ -40,7 +43,7 @@ class GithubHookController implements Controller {
   private initialiseRoutes(): void {
     this.router.get(`${this.path}`, this.getHook)
     this.router.post(
-      `${this.path}`, this.receiveHook
+      `${this.path}`, this.webhookHandler.middleware, this.receiveHook
     )
   }
 

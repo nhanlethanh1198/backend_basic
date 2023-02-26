@@ -2091,6 +2091,13 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
+"@inventivetalent/express-github-webhook@1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@inventivetalent/express-github-webhook/-/express-github-webhook-1.0.3.tgz#b4c2fe2363791a3c8eb5546dddbfc1b47d35f988"
+  integrity sha512-3ouY9ox92Birracc9L/UdEJj6Bsu20gSNXpuoeOyBK2Cf0z3uIqQDK6LPpn2/0rIrFIijsneR288ZMkCnRN1zQ==
+  dependencies:
+    express "^4.17.1"
+
 "@jridgewell/gen-mapping@^0.1.0":
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/@jridgewell/gen-mapping/-/gen-mapping-0.1.1.tgz#e5d2e450306a9491e3bd77e323e38d7aff315996"
@@ -4094,7 +4101,7 @@ express-session@1.17.3:
     safe-buffer "5.2.1"
     uid-safe "~2.1.5"
 
-express@^4.18.2:
+express@^4.17.1, express@^4.18.2:
   version "4.18.2"
   resolved "https://registry.yarnpkg.com/express/-/express-4.18.2.tgz#3fabe08296e930c796c19e3c516979386ba9fd59"
   integrity sha512-5/PsL6iGPdfQ/lKM1UuielYgv3BUoJfz1aUwU9vHZ+J7gyvwdQXFEBIEIaxeGf0GIcreATNyBExtalisDbuMqQ==
