@@ -45,19 +45,6 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-      - name: Telegram Notify
-        uses: appleboy/telegram-action@0.0.3
-        to: ${{ secrets.TELEGRAM_GROUP_ID }}
-        token: ${{ secrets.TELEGRAM_TOKEN }}
-        message: |
-          ${{ github.actor }} created commit:
-          Commit message: ${{ github.event.commits[0].message }}
-          
-          Repository: ${{ github.repository }}
-          
-          See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
-
-
       - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
