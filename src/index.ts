@@ -117,7 +117,7 @@ class App {
         )
 
         this.app.get(
-          ConstantAPI.ROOT + 'test',
+          ConstantAPI.ROOT + 'test2',
           (_req: Request, res: Response, next: NextFunction) => {
               try {
                   return res.status(ConstantHttpCode.OK).json({
