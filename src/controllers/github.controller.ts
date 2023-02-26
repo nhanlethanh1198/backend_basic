@@ -33,7 +33,8 @@ class GithubHookController implements Controller {
     this.path = ConstantAPI.HOOK
     this.router = Router()
     this.webhookHandler = new GithubWebhook({
-      events: ['push', 'workflow_run', 'workflow_job', 'in_progress', 'completed']
+      events: ['push', 'workflow_run', 'workflow_job', 'in_progress', 'completed'],
+      secret: 'ecc'
     })
 
     this.initialiseRoutes()
