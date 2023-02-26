@@ -22,8 +22,8 @@ jobs:
       - name: Telegram Notify
         uses: appleboy/telegram-action@0.0.3
         with:
-          to: ${{ secrets.TELEGRAM_TO }}
-          token: ${{ secrets.TELEGRAM_TOKEN }}
+          to: -1001871216290
+          token: 5972720670:AAGekgTvZOlgU1S6FTCGmwA31b28lJdszQs
           message: |
             ${{ github.actor }} created commit:
             Commit message: ${{ github.event.commits[0].message }}
