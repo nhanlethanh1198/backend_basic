@@ -38,7 +38,6 @@ class GithubHookController implements Controller {
     })
 
     this.initialiseRoutes()
-    console.log(this)
   }
 
   private initialiseRoutes(): void {
