@@ -43,7 +43,7 @@ class GithubHookController implements Controller {
   private initialiseRoutes(): void {
     this.router.get(`${this.path}`, this.getHook)
     this.router.post(
-      `${this.path}`, this.webhookHandler.middleware, this.receiveHook
+      `${this.path}`, this.receiveHook
     )
   }
 
