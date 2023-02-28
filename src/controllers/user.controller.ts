@@ -1,4 +1,4 @@
-import { Router, Request, Response, NextFunction } from 'express'
+import { NextFunction, Request, Response, Router } from 'express'
 
 import Controller from '@/interfaces/controller.interface'
 
@@ -66,32 +66,32 @@ class UserController implements Controller {
             `${this.path}${ConstantAPI.USER_UPDATE_PASSWORD}`,
             this.authenticated.verifyTokenAndAuthorization,
             validationMiddleware(this.validate.updatePassword),
-            this.updatePassword,
+          this.updatePassword,
         )
 
         this.router.post(
-            `${this.path}${ConstantAPI.USER_UPDATE_PHONE}`,
-            this.authenticated.verifyTokenAndAuthorization,
-            validationMiddleware(this.validate.updatePhone),
-            this.updatePhone,
+          `${this.path}${ConstantAPI.USER_UPDATE_PHONE}`,
+          this.authenticated.verifyTokenAndAuthorization,
+          validationMiddleware(this.validate.updatePhone),
+          this.updatePhone,
         )
 
-        this.router.post(
-            `${this.path}${ConstantAPI.USER_UPDATE_ADDRESS}`,
-            this.authenticated.verifyTokenAndAuthorization,
-            validationMiddleware(this.validate.updateAddress),
-            this.updateAddress,
-        )
+        // this.router.post(
+        //     `${this.path}${ConstantAPI.USER_UPDATE_ADDRESS}`,
+        //     this.authenticated.verifyTokenAndAuthorization,
+        //     validationMiddleware(this.validate.updateAddress
+        //     this.updateAddress,
+        // )
 
         this.router.post(
-            `${this.path}${ConstantAPI.USER_DELETE}`,
-            this.authenticated.verifyTokenAndAuthorization,
-            validationMiddleware(this.validate.deleteUser),
-            this.deleteUser,
+          `${this.path}${ConstantAPI.USER_DELETE}`,
+          this.authenticated.verifyTokenAndAuthorization,
+          validationMiddleware(this.validate.deleteUser),
+          this.deleteUser,
         )
 
         this.router.get(
-            `${this.path}${ConstantAPI.USER_GET}`,
+          `${this.path}${ConstantAPI.USER_GET}`,
             this.authenticated.verifyTokenAndAuthorization,
             this.getUser,
         )
@@ -644,114 +644,114 @@ class UserController implements Controller {
             })
         } catch (err: any) {
             next(
-                new HttpException(
-                    ConstantHttpCode.INTERNAL_SERVER_ERROR,
-                    ConstantHttpReason.INTERNAL_SERVER_ERROR,
-                    err?.message,
-                ),
+              new HttpException(
+                ConstantHttpCode.INTERNAL_SERVER_ERROR,
+                ConstantHttpReason.INTERNAL_SERVER_ERROR,
+                err?.message,
+              ),
             )
         }
     }
 
-    private updateAddress = async (
-        req: Request,
-        res: Response,
-        next: NextFunction,
-    ): Promise<Response | void> => {
-        try {
-            const { address, password } = req.body
-            const { id } = req.params
+    // updateAddress = async (
+    //     req: Request,
+    //     res: Response,
+    //     
+    // ): Promise<Response | void> => {
+    //     try {
+    //         const { address, password } = req.body
+    //         const { id } = req.params
+    //
+    //         const user = await this.userService.findByIdWithPassword(id)
+    //         if (!user) {
+    //             return next(
+    //                 new HttpException(
+    //                     ConstantHttpCode.NOT_FOUND,
+    //                     ConstantHttpReason.NOT_FOUND,
+    //                     ConstantMessage.USER_NOT_FOUND,
+    //                 
+    //             )
+    //         }
+    //
+    //         const isAddressValid = this.validate.validateAddress(address)
+    //         if (!isAddressValid) {
+    //             return next(
+    //                 new HttpException(
+    //                     ConstantHttpCode.BAD_REQUEST,
+    //                     ConstantHttpReason.BAD_REQUEST,
+    //                     ConstantMessage.ADDRESS_NOT_VALID,
+    //                 
+    //             )
+    //         }
+    //
+    //         const isPasswordValid = this.validate.validatePassword(password)
+    //         if (!isPasswordValid) {
+    //             return next(
+    //                 new HttpException(
+    //                     ConstantHttpCode.BAD_REQUEST,
+    //                     ConstantHttpReason.BAD_REQUEST,
+    //                     ConstantMessage.PASSWORD_NOT_VALID,
+    //                 
+    //             )
+    //         }
+    //
+    //         const isMatch = this.userService.comparePassword(password, user.password)
+    //         if (!isMatch) {
+    //             return next(
+    //                 new HttpException(
+    //                     ConstantHttpCode.UNAUTHORIZED,
+    //                     ConstantHttpReason.UNAUTHORIZED,
+    //                     ConstantMessage.PASSWORD_NOT_MATCH,
+    //                 
+    //             )
+    //         }
+    //
+    //         if (user.address === address) {
+    //             return next(
+    //                 new HttpException(
+    //                     ConstantHttpCode.BAD_REQUEST,
+    //                     ConstantHttpReason.BAD_REQUEST,
+    //                     ConstantMessage.ADDRESS_NOT_CHANGE,
+    //                 
+    //             )
+    //         }
+    //
+    //         const updatedUser = await this.userService.updateAddress(id, address)
+    //         if (!updatedUser) {
+    //             return next(
+    //                 new HttpException(
+    //                     ConstantHttpCode.BAD_REQUEST,
+    //                     ConstantHttpReason.BAD_REQUEST,
+    //                     ConstantMessage.ADDRESS_NOT_CHANGE,
+    //                 
+    //             )
+    //         }
+    //
+    //         return res.status(ConstantHttpCode.OK).json({
+    //             status: {
+    //                 code: ConstantHttpCode.OK,
+    //                 msg: ConstantHttpReason.OK,
+    //             },
+    //             msg: ConstantMessage.ADDRESS_CHANGE_SUCCESS,
+    //             data: {
+    //                 user: updatedUser,
+    //             },
+    //         })
+    //     } catch (err: any) {
+    //         next(
+    //             new HttpException(
+    //                 ConstantHttpCode.INTERNAL_SERVER_ERROR,
+    //                 ConstantHttpReason.INTERNAL_SERVER_ERROR,
+    //                 err?.message,
+    //             
+    //         )
+    //     }
+    // }
 
-            const user = await this.userService.findByIdWithPassword(id)
-            if (!user) {
-                return next(
-                    new HttpException(
-                        ConstantHttpCode.NOT_FOUND,
-                        ConstantHttpReason.NOT_FOUND,
-                        ConstantMessage.USER_NOT_FOUND,
-                    ),
-                )
-            }
-
-            const isAddressValid = this.validate.validateAddress(address)
-            if (!isAddressValid) {
-                return next(
-                    new HttpException(
-                        ConstantHttpCode.BAD_REQUEST,
-                        ConstantHttpReason.BAD_REQUEST,
-                        ConstantMessage.ADDRESS_NOT_VALID,
-                    ),
-                )
-            }
-
-            const isPasswordValid = this.validate.validatePassword(password)
-            if (!isPasswordValid) {
-                return next(
-                    new HttpException(
-                        ConstantHttpCode.BAD_REQUEST,
-                        ConstantHttpReason.BAD_REQUEST,
-                        ConstantMessage.PASSWORD_NOT_VALID,
-                    ),
-                )
-            }
-
-            const isMatch = this.userService.comparePassword(password, user.password)
-            if (!isMatch) {
-                return next(
-                    new HttpException(
-                        ConstantHttpCode.UNAUTHORIZED,
-                        ConstantHttpReason.UNAUTHORIZED,
-                        ConstantMessage.PASSWORD_NOT_MATCH,
-                    ),
-                )
-            }
-
-            if (user.address === address) {
-                return next(
-                    new HttpException(
-                        ConstantHttpCode.BAD_REQUEST,
-                        ConstantHttpReason.BAD_REQUEST,
-                        ConstantMessage.ADDRESS_NOT_CHANGE,
-                    ),
-                )
-            }
-
-            const updatedUser = await this.userService.updateAddress(id, address)
-            if (!updatedUser) {
-                return next(
-                    new HttpException(
-                        ConstantHttpCode.BAD_REQUEST,
-                        ConstantHttpReason.BAD_REQUEST,
-                        ConstantMessage.ADDRESS_NOT_CHANGE,
-                    ),
-                )
-            }
-
-            return res.status(ConstantHttpCode.OK).json({
-                status: {
-                    code: ConstantHttpCode.OK,
-                    msg: ConstantHttpReason.OK,
-                },
-                msg: ConstantMessage.ADDRESS_CHANGE_SUCCESS,
-                data: {
-                    user: updatedUser,
-                },
-            })
-        } catch (err: any) {
-            next(
-                new HttpException(
-                    ConstantHttpCode.INTERNAL_SERVER_ERROR,
-                    ConstantHttpReason.INTERNAL_SERVER_ERROR,
-                    err?.message,
-                ),
-            )
-        }
-    }
-
-    private deleteUser = async (
-        req: Request,
-        res: Response,
-        next: NextFunction,
+    deleteUser = async (
+      req: Request,
+      res: Response,
+      next: NextFunction,
     ): Promise<Response | void> => {
         try {
             const { password } = req.body

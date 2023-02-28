@@ -70,10 +70,10 @@ class UserService {
         return user
     }
 
-    public async updateAddress(id: string, address: string): Promise<any> {
-        const user = await this.userRepository.updateAddress(id, address)
-        return user
-    }
+    // public async updateAddress(id: string, address: string): Promise<any> {
+    //     const user = await this.userRepository.updateAddress(id, address)
+    //     return user
+    // }
 
     public async deleteUser(id: string): Promise<any> {
         const user = await this.userRepository.deleteUser(id)

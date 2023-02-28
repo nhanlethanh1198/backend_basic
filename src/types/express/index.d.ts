@@ -5,5 +5,10 @@ declare global {
         export interface Request {
             user: User
         }
+
+        export type TypedResponse<T> =
+          Omit<Response, 'json' | 'status'>
+          & { json(data: T): TypedResponse<T> }
+          & { status(code: number): TypedResponse<T> };
     }
 }

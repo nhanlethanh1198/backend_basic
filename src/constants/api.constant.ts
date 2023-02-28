@@ -1,4 +1,6 @@
 class Api {
+    public static readonly DEFAULT_PAGE_SIZE: number = 10
+
     public static readonly ROOT: string = '/'
 
     public static readonly API: string = '/api'
@@ -25,25 +27,26 @@ class Api {
     public static readonly USER_GET_ALL_STATS: string = '/stats'
 }
 
-const ConstantAPI = {
-    ROOT: '/',
-    API: '/api',
-    HOOK: '/hook',
-    AUTH: '/auth',
-    AUTH_REGISTER: '/register',
-    AUTH_LOGIN: '/login',
-    USERS: '/users',
-    USER_UPDATE_USERNAME: '/update-username/:id',
-    USER_UPDATE_NAME: '/update-name/:id',
-    USER_UPDATE_EMAIL: '/update-email/:id',
-    USER_UPDATE_PASSWORD: '/update-password/:id',
-    USER_UPDATE_PHONE: '/update-phone/:id',
-    USER_UPDATE_ADDRESS: '/update-address/:id',
-    USER_DELETE: '/delete/:id',
-    USER_GET: '/find/:id',
-    USER_GET_ALL: '/',
-    USER_GET_ALL_STATS: '/stats',
+//
+// const ConstantAPI = {
+//     ROOT: '/',
+//     API: '/api',
+//     HOOK: '/hook',
+//     AUTH: '/auth',
+//     AUTH_REGISTER: '/register',
+//     AUTH_LOGIN: '/login',
+//     USERS: '/users',
+//     USER_UPDATE_USERNAME: '/update-username/:id',
+//     USER_UPDATE_NAME: '/update-name/:id',
+//     USER_UPDATE_EMAIL: '/update-email/:id',
+//     USER_UPDATE_PASSWORD: '/update-password/:id',
+//     USER_UPDATE_PHONE: '/update-phone/:id',
+//     USER_UPDATE_ADDRESS: '/update-address/:id',
+//     USER_DELETE: '/delete/:id',
+//     USER_GET: '/find/:id',
+//     USER_GET_ALL: '/',
+//     USER_GET_ALL_STATS: '/stats',
+//
+// }
 
-}
-
-export default ConstantAPI
+export default Api

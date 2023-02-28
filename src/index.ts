@@ -11,7 +11,6 @@ import Controller from '@/interfaces/controller.interface'
 
 import mongoConnectDB from '@/config/db.config'
 import { postgresTestConnectDB, syncSequelize } from '@/config/sql.config'
-import axios, { AxiosError, AxiosResponse } from 'axios'
 
 // variable
 import Variable from '@/env/variable.env'
@@ -25,8 +24,7 @@ import ConstantMessage from '@/constants/message.constant'
 // http constant
 import ConstantHttpCode from '@/constants/http.code.constant'
 import ConstantHttpReason from '@/constants/http.reason.constant'
-import { GithubHookInterface } from '@/interfaces/github.hook.interface'
-import { TGithubhook } from './types/githubhook'
+
 const morgan = require('morgan')
 
 const session = require('express-session')
@@ -59,7 +57,7 @@ class App {
         this.SESSION_RESAVE = Variable.SESSION_RESAVE;
 
 
-        this.initialiseDatabaseConnection(this.MONGO_DATABASE_URL).then();
+        // this.initialiseDatabaseConnection(this.MONGO_DATABASE_URL).then();
         this.initialisePostgresConnection().then();
         this.initialiseConfig();
         this.initialiseRoutes();

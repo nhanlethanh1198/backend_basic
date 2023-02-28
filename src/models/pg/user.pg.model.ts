@@ -2,46 +2,46 @@ import {
   Association,
   CreationOptional,
   DataTypes,
-  HasManyGetAssociationsMixin,
-  HasManySetAssociationsMixin,
   HasManyAddAssociationMixin,
   HasManyAddAssociationsMixin,
+  HasManyCountAssociationsMixin,
   HasManyCreateAssociationMixin,
-  HasManyRemoveAssociationMixin,
-  HasManyRemoveAssociationsMixin,
+  HasManyGetAssociationsMixin,
   HasManyHasAssociationMixin,
   HasManyHasAssociationsMixin,
-  HasManyCountAssociationsMixin,
-  InferCreationAttributes,
+  HasManyRemoveAssociationMixin,
+  HasManyRemoveAssociationsMixin,
+  HasManySetAssociationsMixin,
   InferAttributes,
+  InferCreationAttributes,
   Model,
-  NonAttribute, CreateOptions,
-  Sequelize
+  NonAttribute,
 } from 'sequelize'
-import {sequelize} from '@/config/sql.config'
+import { sequelize } from '@/config/sql.config'
 import ModelConstant from '@/constants/model.pg.constant'
-import {PostModel as Post} from '.'
+import { PostModel as Post } from '.'
 
 type UserAssociations = 'posts'
 
 class User extends Model<
-  InferAttributes<User, {omit: UserAssociations}>,
-  InferCreationAttributes<User, {omit: UserAssociations}>
+  InferAttributes<User, { omit: UserAssociations }>,
+  InferCreationAttributes<User, { omit: UserAssociations }>
 > {
-    declare id: CreationOptional<uuid>
-    declare first_name: string | null
-    declare last_name: string | null
-    declare email: string | null
-    declare phone: string | null
-    declare password: string | null
-    declare is_admin: boolean
-    declare readonly created_at: Date
-    declare readonly updated_at: Date
-    declare readonly deleted_at: Date | null
+  declare id: CreationOptional<uuid>
+  declare username: string
+  declare first_name?: string | null
+  declare last_name?: string | null
+  declare email: string | null
+  declare phone: string | null
+  declare password: string | null
+  declare is_admin: boolean
+  declare readonly created_at?: Date
+  declare readonly updated_at?: Date
+  declare readonly deleted_at?: Date | null
 
-    declare static associations: {
-      authors: Association<Post, User>,
-    }
+  declare static associations: {
+    authors: Association<Post, User>,
+  }
 
   declare posts?: NonAttribute<Post[]>
   declare getPosts: HasManyGetAssociationsMixin<Post>
@@ -61,6 +61,10 @@ class User extends Model<
           type: DataTypes.UUID,
           defaultValue: DataTypes.UUIDV4,
           primaryKey: true,
+        },
+        username: {
+          type: DataTypes.STRING,
+          allowNull: false,
         },
         first_name: {
           type: DataTypes.STRING,
