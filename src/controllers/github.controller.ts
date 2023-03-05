@@ -104,6 +104,11 @@ class GithubHookController implements Controller {
       repository
     } = data
 
+    logger.alert(`log ne`)
+    console.log({ data })
+    logger.alert(`end log ne`)
+
+
     const new_workflow_job = {
       check_run_url: workflow_job?.check_run_url,
       completed_at: workflow_job?.completed_at,
